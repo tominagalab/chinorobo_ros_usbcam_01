@@ -46,7 +46,7 @@ def callback_image(_msg):
   if _msg.encoding == 'bgr8':
     pass
   elif _msg.encoding == 'rgb8':
-    cv2.cvtColor(src, cv2.COLOR_RGB2BGR)
+    src = cv2.cvtColor(src, cv2.COLOR_RGB2BGR)
   else:
     pass
     
@@ -63,5 +63,5 @@ def callback_image(_msg):
 if __name__=="__main__":
   rospy.init_node("hsv_filter", anonymous=False)
   srv = Server(ParametersConfig, callback_config)
-  sub = rospy.Subscriber("/input_image", Image, callback_image)
+  sub = rospy.Subscriber("/image_input", Image, callback_image)
   rospy.spin()
