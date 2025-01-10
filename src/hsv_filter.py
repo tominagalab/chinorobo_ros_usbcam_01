@@ -8,7 +8,8 @@ from dynamic_reconfigure.server import Server
 from chinorobo_ros_usbcam_01.cfg import ParametersConfig
 
 bridge = CvBridge()
-pub = rospy.Publisher("image_filtered", Image, queue_size=5)
+pub_filtered = rospy.Publisher("image_filtered", Image, queue_size=5)
+pub_mask = rospy.Publisher("image_mask", Image, queue_size=5)
 
 h_min = 0
 h_max = 0
@@ -17,7 +18,7 @@ s_max = 0
 v_min = 0
 v_max = 0
 
-def callback(config, level):
+def callback_config(config, level):
   # rospy.loginfo('{H_min}'.format(**config))
   global h_min
   global h_max
@@ -38,19 +39,29 @@ def callback_image(_msg):
   global bridge
   global pub
   
+  # rospy.loginfo("image encoding = {}".format(_msg.encoding))
+
   src = bridge.imgmsg_to_cv2(_msg)
+  
+  if _msg.encoding == 'bgr8':
+    pass
+  elif _msg.encoding == 'rgb8':
+    cv2.cvtColor(src, cv2.COLOR_RGB2BGR)
+  else:
+    pass
+    
   hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)
-  # rospy.loginfo('H_min:{}'.format(h_min))
   mask = cv2.inRange(hsv, (h_min, s_min, v_min), (h_max, s_max, v_max))
   dst = cv2.bitwise_and(src, src, mask=mask)
   
-  msg = bridge.cv2_to_imgmsg(dst, 'bgr8')
-  pub.publish(msg)
+  msg_dst = bridge.cv2_to_imgmsg(dst, 'bgr8')
+  
+  pub_filtered.publish(msg_dst)
   
   return
 
 if __name__=="__main__":
   rospy.init_node("hsv_filter", anonymous=False)
-  srv = Server(ParametersConfig, callback)
-  sub = rospy.Subscriber("/image_src", Image, callback_image)
+  srv = Server(ParametersConfig, callback_config)
+  sub = rospy.Subscriber("/input_image", Image, callback_image)
   rospy.spin()
