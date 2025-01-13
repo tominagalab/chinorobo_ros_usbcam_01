@@ -77,3 +77,5 @@ if __name__=="__main__":
   srv = Server(ParametersConfig, callback_config)
   sub = rospy.Subscriber(INPUT_IMAGE_TOPIC, Image, callback_image)
   rospy.spin()
+  
+  
