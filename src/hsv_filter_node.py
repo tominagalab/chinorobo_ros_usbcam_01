@@ -7,7 +7,6 @@ from cv_bridge import CvBridge
 from dynamic_reconfigure.server import Server
 from chinorobo_ros_usbcam_01.cfg import ParametersConfig
 
-
 # Node name
 NODE_NAME = 'hsv_filter_node'
 
