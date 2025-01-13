@@ -1,0 +1,4 @@
+<launch>
+  <node name="hsv_filtering" pkg="chinorobo_ros_usbcam_01" type="hsv_filter_node.py" />
+  <node name="reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
+</launch>
