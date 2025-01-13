@@ -1,6 +1,6 @@
 <launch>
   <arg name="framerate" default="30" />
-  <node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node">
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node">
     <param name="framerate" value="$(arg framerate)" />
   </node>
   <node name="usb_cam_view" pkg="image_view" type="image_view" >
