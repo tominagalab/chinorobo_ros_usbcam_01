@@ -4,9 +4,9 @@
   </node>
   <node name="reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
   <node name="filtered" pkg="image_view" type="image_view">
-    <remap from="image" to="/hsv_filtering/image_filtered"/>
+    <remap from="image" to="/hsv_filter/image_filtered"/>
   </node>
   <node name="mask" pkg="image_view" type="image_view">
-    <remap from="image" to="/hsv_filtering/image_mask"/>
+    <remap from="image" to="/hsv_filter/image_mask"/>
   </node>
 </launch>
