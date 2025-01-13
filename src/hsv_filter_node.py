@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 import rospy
 from sensor_msgs.msg import Image
 import cv2
@@ -80,5 +79,6 @@ if __name__=="__main__":
   srv = Server(ParametersConfig, callback_config)
   sub = rospy.Subscriber(INPUT_IMAGE_TOPIC, Image, callback_image)
   rospy.spin()
+  
   
   
