@@ -7,9 +7,19 @@ from cv_bridge import CvBridge
 from dynamic_reconfigure.server import Server
 from chinorobo_ros_usbcam_01.cfg import ParametersConfig
 
+# Node name
+NODE_NAME = 'hsv_filter_node'
+
+# Subscribe topic names
+INPUT_IMAGE_TOPIC = '/image'
+
+# Publish topic names
+OUTPUT_FILTERED_IMAGE_TOPIC = '/hsv_filter/image_filtered'
+OUTPUT_MASK_IMAGE_TOPIC = '/hsv_filter/image_mask'
+
 bridge = CvBridge()
-pub_filtered = rospy.Publisher("/hsv_filter/image_filtered", Image, queue_size=5)
-pub_mask = rospy.Publisher("/hsv_filter/image_mask", Image, queue_size=5)
+pub_filtered = rospy.Publisher(OUTPUT_FILTERED_IMAGE_TOPIC, Image, queue_size=5)
+pub_mask = rospy.Publisher(OUTPUT_MASK_IMAGE_TOPIC, Image, queue_size=5)
 
 h_min = 0
 h_max = 0
@@ -63,7 +73,7 @@ def callback_image(_msg):
   return
 
 if __name__=="__main__":
-  rospy.init_node("hsv_filter", anonymous=False)
+  rospy.init_node(NODE_NAME, anonymous=False)
   srv = Server(ParametersConfig, callback_config)
-  sub = rospy.Subscriber("/image", Image, callback_image)
+  sub = rospy.Subscriber(INPUT_IMAGE_TOPIC, Image, callback_image)
   rospy.spin()
