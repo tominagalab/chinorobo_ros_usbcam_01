@@ -10,6 +10,7 @@ from chinorobo_ros_usbcam_01.cfg import ParametersConfig
 # Node name
 NODE_NAME = 'hsv_filter_node'
 
+
 # Subscribe topic names
 INPUT_IMAGE_TOPIC = '/image'
 
